@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:peminjaman_barang/core/exceptions/exceptions.dart';
+import 'package:peminjaman_barang/core/static/static.dart';
 import 'package:peminjaman_barang/features/profile/domain/entities/user_response/user_response_entity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
-final baseUrl = dotenv.env['baseUrl'];
 
 class UserApiService {
   final SharedPreferences _sharedPreferences;

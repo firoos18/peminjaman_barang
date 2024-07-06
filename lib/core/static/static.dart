@@ -1,1 +1,1 @@
-const String apiUrl = 'peminjaman-barang.vercel.app';
+const String baseUrl = 'https://peminjaman-barang.vercel.app';

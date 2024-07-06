@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:peminjaman_barang/core/exceptions/exceptions.dart';
+import 'package:peminjaman_barang/core/static/static.dart';
 import 'package:peminjaman_barang/features/auth/data/models/login_model.dart';
 import 'package:peminjaman_barang/features/auth/data/models/register_model.dart';
 import 'package:peminjaman_barang/features/auth/domain/entities/login_response/login_response_entity.dart';
 import 'package:http/http.dart' as http;
 import 'package:peminjaman_barang/features/auth/domain/entities/register_response/register_response_entity.dart';
 
-const String baseUrl = 'https://peminjaman-barang.vercel.app';
+// const String baseUrl = 'https://peminjaman-barang.vercel.app';
 
 class AuthApiService {
   Future<LoginResponseEntity> adminLogin(LoginModel loginModel) async {
