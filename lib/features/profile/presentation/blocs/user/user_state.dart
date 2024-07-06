@@ -1,6 +1,5 @@
 part of 'user_bloc.dart';
 
-@freezed
 class UserState extends Equatable {
   final String? message;
   final UserResponseEntity? userResponseEntity;

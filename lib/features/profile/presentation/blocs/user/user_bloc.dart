@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:peminjaman_barang/features/profile/domain/entities/user_response/user_response_entity.dart';
 import 'package:peminjaman_barang/features/profile/domain/usecases/get_user_info_usecase.dart';
 

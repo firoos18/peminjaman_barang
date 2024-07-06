@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:peminjaman_barang/features/barang/presentation/page/barang_admin_page.dart';
 import 'package:peminjaman_barang/features/dashboard/presentation/page/dashboard_page.dart';
 import 'package:peminjaman_barang/features/profile/presentation/blocs/admin/admin_bloc.dart';
-import 'package:peminjaman_barang/features/profile/presentation/blocs/user/user_bloc.dart';
 
 class AdminScaffoldPage extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
@@ -120,7 +120,7 @@ class _AdminScaffoldPageState extends State<AdminScaffoldPage>
                         controller: _tabController,
                         children: const [
                           DashboardPage(),
-                          DashboardPage(),
+                          BarangAdminPage(),
                           DashboardPage(),
                           DashboardPage(),
                         ],
@@ -155,7 +155,7 @@ class _AdminScaffoldPageState extends State<AdminScaffoldPage>
                           ),
                           const SizedBox(height: 32),
                           Text(
-                            'Nama : ${state.userResponseEntity!.data!.name}',
+                            'Nama : ${state.userResponseEntity!.data!.nama}',
                             style: const TextStyle(
                               fontSize: 20,
                               color: Colors.white,
@@ -172,7 +172,7 @@ class _AdminScaffoldPageState extends State<AdminScaffoldPage>
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            'Nama : ${state.userResponseEntity!.data!.name}',
+                            'Nama : ${state.userResponseEntity!.data!.nama}',
                             style: const TextStyle(
                               fontSize: 14,
                               color: Colors.white,

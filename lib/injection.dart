@@ -15,6 +15,11 @@ import 'package:peminjaman_barang/features/auth/presentation/blocs/admin_login/a
 import 'package:peminjaman_barang/features/auth/presentation/blocs/admin_register/admin_register_bloc.dart';
 import 'package:peminjaman_barang/features/auth/presentation/blocs/user_login/user_login_bloc.dart';
 import 'package:peminjaman_barang/features/auth/presentation/blocs/user_register/user_register_bloc.dart';
+import 'package:peminjaman_barang/features/barang/data/data_sources/barang_api_service.dart';
+import 'package:peminjaman_barang/features/barang/data/repository/barang_repository_impl.dart';
+import 'package:peminjaman_barang/features/barang/domain/repository/barang_repository.dart';
+import 'package:peminjaman_barang/features/barang/domain/usecases/get_barang_admin_usecase.dart';
+import 'package:peminjaman_barang/features/barang/presentation/blocs/barang_admin/barang_admin_bloc.dart';
 import 'package:peminjaman_barang/features/profile/data/data_sources/user_api_service.dart';
 import 'package:peminjaman_barang/features/profile/data/repository/user_repository_impl.dart';
 import 'package:peminjaman_barang/features/profile/domain/repository/user_repository.dart';
@@ -36,11 +41,14 @@ Future<void> initializeDependencies() async {
   injector
       .registerSingleton<AuthLocalDataSource>(AuthLocalDataSource(injector()));
   injector.registerSingleton<UserApiService>(UserApiService(injector()));
+  injector.registerSingleton<BarangApiService>(BarangApiService(injector()));
 
   // Repositories
   injector.registerSingleton<AuthRepository>(
       AuthRepositoryImpl(injector(), injector()));
   injector.registerSingleton<UserRepository>(UserRepositoryImpl(injector()));
+  injector
+      .registerSingleton<BarangRepository>(BarangRepositoryImpl(injector()));
 
   // UseCases
   injector.registerSingleton<AdminLoginUseCase>(AdminLoginUseCase(injector()));
@@ -59,6 +67,8 @@ Future<void> initializeDependencies() async {
       .registerSingleton<GetUserInfoUseCase>(GetUserInfoUseCase(injector()));
   injector
       .registerSingleton<GetAdminInfoUseCase>(GetAdminInfoUseCase(injector()));
+  injector.registerSingleton<GetBarangAdminUseCase>(
+      GetBarangAdminUseCase(injector()));
 
   // Blocs
   injector.registerFactory<AdminLoginBloc>(
@@ -71,4 +81,5 @@ Future<void> initializeDependencies() async {
       () => UserLoginBloc(injector(), injector()));
   injector.registerFactory<UserBloc>(() => UserBloc(injector()));
   injector.registerFactory<AdminBloc>(() => AdminBloc(injector()));
+  injector.registerFactory<BarangAdminBloc>(() => BarangAdminBloc(injector()));
 }

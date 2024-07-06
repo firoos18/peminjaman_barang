@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:peminjaman_barang/features/barang/presentation/page/barang_admin_page.dart';
 import 'package:peminjaman_barang/features/dashboard/presentation/page/dashboard_page.dart';
 import 'package:peminjaman_barang/features/auth/presentation/page/auth_page.dart';
 import 'package:peminjaman_barang/landing_page.dart';
@@ -54,7 +55,7 @@ final GoRouter router = GoRouter(
             GoRoute(
               path: '/data-barang-admin',
               name: 'data-barang-admin',
-              builder: (context, state) => const DashboardPage(),
+              builder: (context, state) => const BarangAdminPage(),
             ),
           ],
         ),

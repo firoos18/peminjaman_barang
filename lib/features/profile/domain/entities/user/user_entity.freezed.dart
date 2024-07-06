@@ -21,7 +21,7 @@ UserEntity _$UserEntityFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UserEntity {
   String? get email => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
+  String? get nama => throw _privateConstructorUsedError;
   String? get alamat => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ abstract class $UserEntityCopyWith<$Res> {
           UserEntity value, $Res Function(UserEntity) then) =
       _$UserEntityCopyWithImpl<$Res, UserEntity>;
   @useResult
-  $Res call({String? email, String? name, String? alamat});
+  $Res call({String? email, String? nama, String? alamat});
 }
 
 /// @nodoc
@@ -53,7 +53,7 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
   @override
   $Res call({
     Object? email = freezed,
-    Object? name = freezed,
+    Object? nama = freezed,
     Object? alamat = freezed,
   }) {
     return _then(_value.copyWith(
@@ -61,9 +61,9 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      nama: freezed == nama
+          ? _value.nama
+          : nama // ignore: cast_nullable_to_non_nullable
               as String?,
       alamat: freezed == alamat
           ? _value.alamat
@@ -81,7 +81,7 @@ abstract class _$$UserEntityImplCopyWith<$Res>
       __$$UserEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? email, String? name, String? alamat});
+  $Res call({String? email, String? nama, String? alamat});
 }
 
 /// @nodoc
@@ -96,7 +96,7 @@ class __$$UserEntityImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? email = freezed,
-    Object? name = freezed,
+    Object? nama = freezed,
     Object? alamat = freezed,
   }) {
     return _then(_$UserEntityImpl(
@@ -104,9 +104,9 @@ class __$$UserEntityImplCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      nama: freezed == nama
+          ? _value.nama
+          : nama // ignore: cast_nullable_to_non_nullable
               as String?,
       alamat: freezed == alamat
           ? _value.alamat
@@ -119,7 +119,7 @@ class __$$UserEntityImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$UserEntityImpl implements _UserEntity {
-  const _$UserEntityImpl({this.email, this.name, this.alamat});
+  const _$UserEntityImpl({this.email, this.nama, this.alamat});
 
   factory _$UserEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserEntityImplFromJson(json);
@@ -127,13 +127,13 @@ class _$UserEntityImpl implements _UserEntity {
   @override
   final String? email;
   @override
-  final String? name;
+  final String? nama;
   @override
   final String? alamat;
 
   @override
   String toString() {
-    return 'UserEntity(email: $email, name: $name, alamat: $alamat)';
+    return 'UserEntity(email: $email, nama: $nama, alamat: $alamat)';
   }
 
   @override
@@ -142,13 +142,13 @@ class _$UserEntityImpl implements _UserEntity {
         (other.runtimeType == runtimeType &&
             other is _$UserEntityImpl &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.name, name) || other.name == name) &&
+            (identical(other.nama, nama) || other.nama == nama) &&
             (identical(other.alamat, alamat) || other.alamat == alamat));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, email, name, alamat);
+  int get hashCode => Object.hash(runtimeType, email, nama, alamat);
 
   @JsonKey(ignore: true)
   @override
@@ -167,7 +167,7 @@ class _$UserEntityImpl implements _UserEntity {
 abstract class _UserEntity implements UserEntity {
   const factory _UserEntity(
       {final String? email,
-      final String? name,
+      final String? nama,
       final String? alamat}) = _$UserEntityImpl;
 
   factory _UserEntity.fromJson(Map<String, dynamic> json) =
@@ -176,7 +176,7 @@ abstract class _UserEntity implements UserEntity {
   @override
   String? get email;
   @override
-  String? get name;
+  String? get nama;
   @override
   String? get alamat;
   @override

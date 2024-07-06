@@ -7,7 +7,7 @@ part 'user_entity.g.dart';
 class UserEntity with _$UserEntity {
   const factory UserEntity({
     final String? email,
-    final String? name,
+    final String? nama,
     final String? alamat,
   }) = _UserEntity;
 

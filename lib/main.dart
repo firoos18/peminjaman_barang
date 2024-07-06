@@ -8,6 +8,7 @@ import 'package:peminjaman_barang/features/auth/presentation/blocs/admin_login/a
 import 'package:peminjaman_barang/features/auth/presentation/blocs/admin_register/admin_register_bloc.dart';
 import 'package:peminjaman_barang/features/auth/presentation/blocs/user_login/user_login_bloc.dart';
 import 'package:peminjaman_barang/features/auth/presentation/blocs/user_register/user_register_bloc.dart';
+import 'package:peminjaman_barang/features/barang/presentation/blocs/barang_admin/barang_admin_bloc.dart';
 import 'package:peminjaman_barang/features/profile/presentation/blocs/admin/admin_bloc.dart';
 import 'package:peminjaman_barang/features/profile/presentation/blocs/user/user_bloc.dart';
 import 'package:peminjaman_barang/injection.dart';
@@ -45,6 +46,9 @@ class MainApp extends StatelessWidget {
           create: (_) => injector(),
         ),
         BlocProvider<AdminBloc>(
+          create: (_) => injector(),
+        ),
+        BlocProvider<BarangAdminBloc>(
           create: (_) => injector(),
         ),
       ],

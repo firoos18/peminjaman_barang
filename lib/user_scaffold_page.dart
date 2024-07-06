@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:peminjaman_barang/features/dashboard/presentation/page/dashboard_page.dart';
+import 'package:peminjaman_barang/features/profile/presentation/blocs/user/user_bloc.dart';
 
 class UserScaffoldPage extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
@@ -131,67 +134,79 @@ class UserScaffoldPageState extends State<UserScaffoldPage>
                 padding: const EdgeInsets.only(top: 30),
                 color: const Color(0xff2E2D51),
                 width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                      ),
-                      child: Image.asset('assets/images/profile-pic.png'),
-                    ),
-                    const SizedBox(height: 32),
-                    Text(
-                      'Nama',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    Text(
-                      'Role',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Nama',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    Text(
-                      'Email',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    Text(
-                      'Password',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    Text(
-                      'Alamat',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ],
+                child: BlocBuilder<UserBloc, UserState>(
+                  builder: (context, state) {
+                    if (state is UserLoading) {
+                      return const Center(
+                        child: CupertinoActivityIndicator(),
+                      );
+                    } else if (state is UserLoaded) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: Image.asset('assets/images/profile-pic.png'),
+                          ),
+                          const SizedBox(height: 32),
+                          Text(
+                            'Nama : ${state.userResponseEntity!.data!.nama}',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          const Text(
+                            'Peminjam',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'Nama : ${state.userResponseEntity!.data!.nama}',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          Text(
+                            'Email : ${state.userResponseEntity!.data!.email}',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          const Text(
+                            'Password : *********',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          Text(
+                            'Alamat : ${state.userResponseEntity!.data!.alamat}',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return const SizedBox();
+                    }
+                  },
                 ),
               ),
             )

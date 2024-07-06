@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:peminjaman_barang/core/exceptions/exceptions.dart';
 import 'package:peminjaman_barang/features/profile/domain/entities/user_response/user_response_entity.dart';
@@ -47,8 +46,6 @@ class UserApiService {
         'Content-Type': 'application/json',
       },
     );
-
-    print(response.body);
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
