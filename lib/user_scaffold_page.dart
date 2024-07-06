@@ -72,6 +72,7 @@ class UserScaffoldPageState extends State<UserScaffoldPage>
   @override
   void initState() {
     _tabController = TabController(length: 4, vsync: this);
+    context.read<UserBloc>().add(GetUserInfo());
     super.initState();
   }
 

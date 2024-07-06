@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:peminjaman_barang/features/barang/presentation/page/add_barang_page.dart';
 import 'package:peminjaman_barang/features/barang/presentation/page/barang_admin_page.dart';
 import 'package:peminjaman_barang/features/dashboard/presentation/page/dashboard_page.dart';
 import 'package:peminjaman_barang/features/auth/presentation/page/auth_page.dart';
@@ -8,16 +9,24 @@ import 'package:peminjaman_barang/admin_scaffold_page.dart';
 import 'package:peminjaman_barang/user_scaffold_page.dart';
 
 final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: 'root');
-final GlobalKey<NavigatorState> _dashboardNavigator =
+
+final GlobalKey<NavigatorState> _adminDashboardNavigator =
     GlobalKey(debugLabel: 'dashboard');
-final GlobalKey<NavigatorState> _dataBarangNavigator =
+final GlobalKey<NavigatorState> _adminDataBarangNavigator =
     GlobalKey(debugLabel: 'data-barang');
-final GlobalKey<NavigatorState> _peminjamanNavigator =
+final GlobalKey<NavigatorState> _adminPeminjamanNavigator =
     GlobalKey(debugLabel: 'peminjaman');
-final GlobalKey<NavigatorState> _pinjamNavigator =
-    GlobalKey(debugLabel: 'pinjam');
-final GlobalKey<NavigatorState> _transaksiNavigator =
+final GlobalKey<NavigatorState> _adminTransaksiNavigator =
     GlobalKey(debugLabel: 'transaksi');
+
+final GlobalKey<NavigatorState> _userDashboardNavigator =
+    GlobalKey(debugLabel: 'dashboard');
+final GlobalKey<NavigatorState> _userDataBarangNavigator =
+    GlobalKey(debugLabel: 'data-barang');
+final GlobalKey<NavigatorState> _userTransaksiNavigator =
+    GlobalKey(debugLabel: 'transaksi');
+final GlobalKey<NavigatorState> _userPinjamNavigator =
+    GlobalKey(debugLabel: 'pinjam');
 
 final GoRouter router = GoRouter(
   initialLocation: '/landing',
@@ -40,7 +49,7 @@ final GoRouter router = GoRouter(
       ),
       branches: <StatefulShellBranch>[
         StatefulShellBranch(
-          navigatorKey: _dashboardNavigator,
+          navigatorKey: _adminDashboardNavigator,
           routes: [
             GoRoute(
               path: '/admin',
@@ -50,17 +59,26 @@ final GoRouter router = GoRouter(
           ],
         ),
         StatefulShellBranch(
-          navigatorKey: _dataBarangNavigator,
+          navigatorKey: _adminDataBarangNavigator,
           routes: [
             GoRoute(
               path: '/data-barang-admin',
               name: 'data-barang-admin',
-              builder: (context, state) => const BarangAdminPage(),
+              builder: (context, state) => BarangAdminPage(
+                barangAdminPageState: state.extra as BarangAdminPageState,
+              ),
+              routes: [
+                GoRoute(
+                  path: 'add-barang',
+                  name: 'add-barang',
+                  builder: (context, state) => const AddBarangPage(),
+                )
+              ],
             ),
           ],
         ),
         StatefulShellBranch(
-          navigatorKey: _peminjamanNavigator,
+          navigatorKey: _adminPeminjamanNavigator,
           routes: [
             GoRoute(
               path: '/peminjaman-admin',
@@ -70,10 +88,10 @@ final GoRouter router = GoRouter(
           ],
         ),
         StatefulShellBranch(
-          navigatorKey: _transaksiNavigator,
+          navigatorKey: _adminTransaksiNavigator,
           routes: [
             GoRoute(
-              path: '/transaksi=admin',
+              path: '/transaksi-admin',
               name: 'transaksi-admin',
               builder: (context, state) => const DashboardPage(),
             ),
@@ -87,7 +105,7 @@ final GoRouter router = GoRouter(
       ),
       branches: <StatefulShellBranch>[
         StatefulShellBranch(
-          navigatorKey: _dashboardNavigator,
+          navigatorKey: _userDashboardNavigator,
           routes: [
             GoRoute(
               path: '/user',
@@ -97,7 +115,7 @@ final GoRouter router = GoRouter(
           ],
         ),
         StatefulShellBranch(
-          navigatorKey: _dataBarangNavigator,
+          navigatorKey: _userDataBarangNavigator,
           routes: [
             GoRoute(
               path: '/data-barang-user',
@@ -107,7 +125,7 @@ final GoRouter router = GoRouter(
           ],
         ),
         StatefulShellBranch(
-          navigatorKey: _pinjamNavigator,
+          navigatorKey: _userPinjamNavigator,
           routes: [
             GoRoute(
               path: '/pinjam-user',
@@ -117,7 +135,7 @@ final GoRouter router = GoRouter(
           ],
         ),
         StatefulShellBranch(
-          navigatorKey: _transaksiNavigator,
+          navigatorKey: _userTransaksiNavigator,
           routes: [
             GoRoute(
               path: '/transaksi-user',

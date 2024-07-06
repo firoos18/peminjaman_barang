@@ -120,7 +120,9 @@ class _AdminScaffoldPageState extends State<AdminScaffoldPage>
                         controller: _tabController,
                         children: const [
                           DashboardPage(),
-                          BarangAdminPage(),
+                          BarangAdminPage(
+                            barangAdminPageState: BarangAdminPageState.data,
+                          ),
                           DashboardPage(),
                           DashboardPage(),
                         ],

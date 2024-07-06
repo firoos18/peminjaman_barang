@@ -490,10 +490,12 @@ class _AuthPageState extends State<AuthPage> {
                         .add(UserLoginButtonTapped(loginModel: loginModel));
                   } else {
                     final RegisterModel registerModel = RegisterModel(
-                        email: email,
-                        nama: name,
-                        password: password,
-                        repeatPassword: repeatPassword);
+                      email: email,
+                      nama: name,
+                      password: password,
+                      repeatPassword: repeatPassword,
+                      alamat: alamat,
+                    );
 
                     context.read<UserRegisterBloc>().add(
                         UserRegisterButtonTapped(registerModel: registerModel));
