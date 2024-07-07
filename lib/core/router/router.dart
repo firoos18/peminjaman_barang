@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:peminjaman_barang/features/barang/presentation/page/barang_admin_page.dart';
 import 'package:peminjaman_barang/features/dashboard/presentation/page/dashboard_page.dart';
 import 'package:peminjaman_barang/features/auth/presentation/page/auth_page.dart';
+import 'package:peminjaman_barang/features/peminjaman/presentation/pages/peminjaman_page.dart';
 import 'package:peminjaman_barang/landing_page.dart';
 import 'package:peminjaman_barang/admin_scaffold_page.dart';
 import 'package:peminjaman_barang/user_scaffold_page.dart';
@@ -75,7 +76,9 @@ final GoRouter router = GoRouter(
             GoRoute(
               path: '/peminjaman-admin',
               name: 'peminjaman-admin',
-              builder: (context, state) => const DashboardPage(),
+              builder: (context, state) => PeminjamanPage(
+                peminjamanPageState: state.extra as PeminjamanPageState,
+              ),
             ),
           ],
         ),
@@ -122,7 +125,9 @@ final GoRouter router = GoRouter(
             GoRoute(
               path: '/pinjam-user',
               name: 'pinjam-user',
-              builder: (context, state) => const DashboardPage(),
+              builder: (context, state) => PeminjamanPage(
+                peminjamanPageState: state.extra as PeminjamanPageState,
+              ),
             ),
           ],
         ),

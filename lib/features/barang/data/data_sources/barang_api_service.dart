@@ -3,9 +3,9 @@ import 'package:peminjaman_barang/core/exceptions/exceptions.dart';
 import 'package:peminjaman_barang/core/static/static.dart';
 import 'package:peminjaman_barang/features/barang/data/models/add_barang_model.dart';
 import 'package:peminjaman_barang/features/barang/domain/entity/add_barang_response/add_barang_response_entity.dart';
-import 'package:peminjaman_barang/features/barang/domain/entity/barang_admin_response/barang_admin_response_entity.dart';
 import 'package:peminjaman_barang/features/barang/domain/entity/barang_by_id_response/barang_by_id_response_entity.dart';
 import 'package:peminjaman_barang/features/barang/domain/entity/delete_barang_response/delete_barang_response_entity.dart';
+import 'package:peminjaman_barang/features/barang/domain/entity/list_barang_response/list_barang_response_entity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,12 +14,11 @@ class BarangApiService {
 
   const BarangApiService(this._sharedPreferences);
 
-  Future<BarangAdminResponseEntity> getListBarang() async {
+  Future<ListBarangResponseEntity> getListBarang() async {
     final token = _sharedPreferences.getString('token');
-    final uid = _sharedPreferences.getString('uid');
 
     final response = await http.get(
-      Uri.parse('$baseUrl/barang/admin/$uid'),
+      Uri.parse('$baseUrl/barang/'),
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -28,7 +27,7 @@ class BarangApiService {
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
 
-      return BarangAdminResponseEntity.fromJson(data);
+      return ListBarangResponseEntity.fromJson(data);
     } else {
       final data = jsonDecode(response.body);
 

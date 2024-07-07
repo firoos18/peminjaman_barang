@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:peminjaman_barang/core/commons/widgets/custom_loading_indicator.dart';
@@ -101,6 +100,7 @@ class _BarangAdminPageState extends State<BarangAdminPage> {
                           Row(
                             children: [
                               Image.asset('assets/images/box.png'),
+                              const SizedBox(width: 8),
                               const Text(
                                 'Data Barang',
                                 style: TextStyle(
@@ -152,6 +152,7 @@ class _BarangAdminPageState extends State<BarangAdminPage> {
                               child: CupertinoActivityIndicator(),
                             );
                           } else if (state is BarangAdminLoaded) {
+                            print(state.barangAdminEntity);
                             return Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 24),
@@ -237,35 +238,35 @@ class _BarangAdminPageState extends State<BarangAdminPage> {
                                               ),
                                             ),
                                             Text(
-                                              barang.barang!.kodeBarang!,
+                                              barang.kodeBarang!,
                                               style: const TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
                                             Text(
-                                              barang.barang!.nama!,
+                                              barang.nama!,
                                               style: const TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
                                             Text(
-                                              barang.barang!.merek!,
+                                              barang.merek!,
                                               style: const TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
                                             Text(
-                                              barang.barang!.jenis!,
+                                              barang.jenis!,
                                               style: const TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
                                             Text(
-                                              barang.barang!.unit!.toString(),
+                                              barang.unit!.toString(),
                                               style: const TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w500,
@@ -283,7 +284,6 @@ class _BarangAdminPageState extends State<BarangAdminPage> {
                                                           id: state
                                                               .barangAdminEntity![
                                                                   index]
-                                                              .barang!
                                                               .id,
                                                         ),
                                                       ),
@@ -301,7 +301,6 @@ class _BarangAdminPageState extends State<BarangAdminPage> {
                                                       selectedBarangId = state
                                                           .barangAdminEntity![
                                                               index]
-                                                          .barang!
                                                           .id;
                                                     });
 

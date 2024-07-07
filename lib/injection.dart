@@ -28,6 +28,13 @@ import 'package:peminjaman_barang/features/barang/presentation/blocs/barang_admi
 import 'package:peminjaman_barang/features/barang/presentation/blocs/barang_by_id/barang_by_id_bloc.dart';
 import 'package:peminjaman_barang/features/barang/presentation/blocs/delete_barang/delete_barang_bloc.dart';
 import 'package:peminjaman_barang/features/barang/presentation/blocs/update_barang/update_barang_bloc.dart';
+import 'package:peminjaman_barang/features/peminjaman/data/data_sources/peminjaman_api_service.dart';
+import 'package:peminjaman_barang/features/peminjaman/data/repository/peminjaman_repository_impl.dart';
+import 'package:peminjaman_barang/features/peminjaman/domain/repository/peminjaman_repository.dart';
+import 'package:peminjaman_barang/features/peminjaman/domain/usecases/get_all_peminjaman_usecase.dart';
+import 'package:peminjaman_barang/features/peminjaman/domain/usecases/pinjam_barang_usecase.dart';
+import 'package:peminjaman_barang/features/peminjaman/presentation/blocs/get_all_peminjaman/get_all_peminjaman_bloc.dart';
+import 'package:peminjaman_barang/features/peminjaman/presentation/blocs/pinjam_barang/pinjam_barang_bloc.dart';
 import 'package:peminjaman_barang/features/profile/data/data_sources/user_api_service.dart';
 import 'package:peminjaman_barang/features/profile/data/repository/user_repository_impl.dart';
 import 'package:peminjaman_barang/features/profile/domain/repository/user_repository.dart';
@@ -50,6 +57,8 @@ Future<void> initializeDependencies() async {
       .registerSingleton<AuthLocalDataSource>(AuthLocalDataSource(injector()));
   injector.registerSingleton<UserApiService>(UserApiService(injector()));
   injector.registerSingleton<BarangApiService>(BarangApiService(injector()));
+  injector.registerSingleton<PeminjamanApiService>(
+      PeminjamanApiService(injector()));
 
   // Repositories
   injector.registerSingleton<AuthRepository>(
@@ -57,6 +66,8 @@ Future<void> initializeDependencies() async {
   injector.registerSingleton<UserRepository>(UserRepositoryImpl(injector()));
   injector
       .registerSingleton<BarangRepository>(BarangRepositoryImpl(injector()));
+  injector.registerSingleton<PeminjamanRepository>(
+      PeminjamanRepositoryImpl(injector()));
 
   // UseCases
   injector.registerSingleton<AdminLoginUseCase>(AdminLoginUseCase(injector()));
@@ -85,6 +96,10 @@ Future<void> initializeDependencies() async {
       .registerSingleton<UpdateBarangUseCase>(UpdateBarangUseCase(injector()));
   injector.registerSingleton<GetBarangByIdUseCase>(
       GetBarangByIdUseCase(injector()));
+  injector.registerSingleton<GetAllPeminjamanUseCase>(
+      GetAllPeminjamanUseCase(injector()));
+  injector
+      .registerSingleton<PinjamBarangUseCase>(PinjamBarangUseCase(injector()));
 
   // Blocs
   injector.registerFactory<AdminLoginBloc>(
@@ -105,4 +120,8 @@ Future<void> initializeDependencies() async {
       .registerFactory<DeleteBarangBloc>(() => DeleteBarangBloc(injector()));
   injector
       .registerFactory<UpdateBarangBloc>(() => UpdateBarangBloc(injector()));
+  injector.registerFactory<GetAllPeminjamanBloc>(
+      () => GetAllPeminjamanBloc(injector()));
+  injector
+      .registerFactory<PinjamBarangBloc>(() => PinjamBarangBloc(injector()));
 }

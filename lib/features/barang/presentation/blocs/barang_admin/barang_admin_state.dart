@@ -1,7 +1,7 @@
 part of 'barang_admin_bloc.dart';
 
 class BarangAdminState extends Equatable {
-  final List<BarangAdminEntity>? barangAdminEntity;
+  final List<BarangEntity>? barangAdminEntity;
   final String? message;
 
   const BarangAdminState({this.barangAdminEntity, this.message});

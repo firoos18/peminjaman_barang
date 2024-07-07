@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:peminjaman_barang/features/barang/presentation/page/barang_admin_page.dart';
 import 'package:peminjaman_barang/features/dashboard/presentation/page/dashboard_page.dart';
+import 'package:peminjaman_barang/features/peminjaman/presentation/pages/peminjaman_page.dart';
 import 'package:peminjaman_barang/features/profile/presentation/blocs/admin/admin_bloc.dart';
 
 class AdminScaffoldPage extends StatefulWidget {
@@ -123,7 +124,9 @@ class _AdminScaffoldPageState extends State<AdminScaffoldPage>
                           BarangAdminPage(
                             barangAdminPageState: BarangAdminPageState.data,
                           ),
-                          DashboardPage(),
+                          PeminjamanPage(
+                            peminjamanPageState: PeminjamanPageState.peminjaman,
+                          ),
                           DashboardPage(),
                         ],
                       ),

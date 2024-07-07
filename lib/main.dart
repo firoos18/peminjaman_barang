@@ -12,6 +12,8 @@ import 'package:peminjaman_barang/features/barang/presentation/blocs/barang_admi
 import 'package:peminjaman_barang/features/barang/presentation/blocs/barang_by_id/barang_by_id_bloc.dart';
 import 'package:peminjaman_barang/features/barang/presentation/blocs/delete_barang/delete_barang_bloc.dart';
 import 'package:peminjaman_barang/features/barang/presentation/blocs/update_barang/update_barang_bloc.dart';
+import 'package:peminjaman_barang/features/peminjaman/presentation/blocs/get_all_peminjaman/get_all_peminjaman_bloc.dart';
+import 'package:peminjaman_barang/features/peminjaman/presentation/blocs/pinjam_barang/pinjam_barang_bloc.dart';
 import 'package:peminjaman_barang/features/profile/presentation/blocs/admin/admin_bloc.dart';
 import 'package:peminjaman_barang/features/profile/presentation/blocs/user/user_bloc.dart';
 import 'package:peminjaman_barang/injection.dart';
@@ -63,6 +65,12 @@ class MainApp extends StatelessWidget {
           create: (_) => injector(),
         ),
         BlocProvider<UpdateBarangBloc>(
+          create: (_) => injector(),
+        ),
+        BlocProvider<PinjamBarangBloc>(
+          create: (_) => injector(),
+        ),
+        BlocProvider<GetAllPeminjamanBloc>(
           create: (_) => injector(),
         ),
       ],
