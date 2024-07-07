@@ -11,7 +11,7 @@ import 'package:peminjaman_barang/features/barang/presentation/blocs/barang_by_i
 import 'package:peminjaman_barang/features/barang/presentation/blocs/delete_barang/delete_barang_bloc.dart';
 import 'package:peminjaman_barang/features/barang/presentation/blocs/update_barang/update_barang_bloc.dart';
 
-enum BarangAdminPageState { data, add, edit }
+enum BarangAdminPageState { data, add, edit, user }
 
 enum MenuButton { edit, delete }
 
@@ -152,7 +152,6 @@ class _BarangAdminPageState extends State<BarangAdminPage> {
                               child: CupertinoActivityIndicator(),
                             );
                           } else if (state is BarangAdminLoaded) {
-                            print(state.barangAdminEntity);
                             return Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 24),
@@ -331,6 +330,197 @@ class _BarangAdminPageState extends State<BarangAdminPage> {
                 ),
               ],
             ),
+          ),
+        ),
+      );
+    } else if (_barangAdminPageState == BarangAdminPageState.user) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 40),
+        child: SingleChildScrollView(
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height,
+                decoration: const BoxDecoration(
+                  color: Color(0xffDFA947),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40),
+                  ),
+                ),
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 48, right: 24),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset('assets/images/box.png'),
+                        const SizedBox(width: 8),
+                        const Text(
+                          'Data Barang',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  decoration: const BoxDecoration(
+                    color: Color(0xffF6CB7D),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                      topRight: Radius.circular(40),
+                    ),
+                  ),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 32, right: 16, left: 16),
+                    child: BlocBuilder<BarangAdminBloc, BarangAdminState>(
+                      builder: (context, state) {
+                        if (state is BarangAdminLoading) {
+                          return const Center(
+                            child: CupertinoActivityIndicator(),
+                          );
+                        } else if (state is BarangAdminLoaded) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 24),
+                            child: Column(
+                              children: [
+                                Table(
+                                  defaultVerticalAlignment:
+                                      TableCellVerticalAlignment.middle,
+                                  children: const [
+                                    TableRow(
+                                      children: [
+                                        Text(
+                                          'No',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Kode Barang',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Nama Barang',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Merek',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Jenis',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Unit',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(height: 16),
+                                const Divider(
+                                  color: Colors.black,
+                                ),
+                                const SizedBox(height: 16),
+                                Table(
+                                  defaultVerticalAlignment:
+                                      TableCellVerticalAlignment.middle,
+                                  children: List<TableRow>.generate(
+                                    state.barangAdminEntity!.length,
+                                    (index) {
+                                      final barang =
+                                          state.barangAdminEntity![index];
+                                      return TableRow(
+                                        children: [
+                                          Text(
+                                            (index + 1).toString(),
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          Text(
+                                            barang.kodeBarang!,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          Text(
+                                            barang.nama!,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          Text(
+                                            barang.merek!,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          Text(
+                                            barang.jenis!,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          Text(
+                                            barang.unit!.toString(),
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return const SizedBox();
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       );

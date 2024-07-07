@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:peminjaman_barang/features/barang/presentation/page/barang_admin_page.dart';
 import 'package:peminjaman_barang/features/dashboard/presentation/page/dashboard_page.dart';
+import 'package:peminjaman_barang/features/peminjaman/presentation/pages/peminjaman_page.dart';
 import 'package:peminjaman_barang/features/profile/presentation/blocs/user/user_bloc.dart';
 
 class UserScaffoldPage extends StatefulWidget {
@@ -119,8 +121,12 @@ class UserScaffoldPageState extends State<UserScaffoldPage>
                         controller: _tabController,
                         children: const [
                           DashboardPage(),
-                          DashboardPage(),
-                          DashboardPage(),
+                          BarangAdminPage(
+                            barangAdminPageState: BarangAdminPageState.user,
+                          ),
+                          PeminjamanPage(
+                            peminjamanPageState: PeminjamanPageState.pinjam,
+                          ),
                           DashboardPage(),
                         ],
                       ),
