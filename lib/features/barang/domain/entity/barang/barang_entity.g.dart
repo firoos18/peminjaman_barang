@@ -8,6 +8,7 @@ part of 'barang_entity.dart';
 
 _$BarangEntityImpl _$$BarangEntityImplFromJson(Map<String, dynamic> json) =>
     _$BarangEntityImpl(
+      id: json['id'] as String?,
       kodeBarang: json['kodeBarang'] as String?,
       nama: json['nama'] as String?,
       merek: json['merek'] as String?,
@@ -17,6 +18,7 @@ _$BarangEntityImpl _$$BarangEntityImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$BarangEntityImplToJson(_$BarangEntityImpl instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'kodeBarang': instance.kodeBarang,
       'nama': instance.nama,
       'merek': instance.merek,

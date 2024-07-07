@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:peminjaman_barang/features/barang/presentation/page/add_barang_page.dart';
 import 'package:peminjaman_barang/features/barang/presentation/page/barang_admin_page.dart';
 import 'package:peminjaman_barang/features/dashboard/presentation/page/dashboard_page.dart';
 import 'package:peminjaman_barang/features/auth/presentation/page/auth_page.dart';
@@ -67,13 +66,6 @@ final GoRouter router = GoRouter(
               builder: (context, state) => BarangAdminPage(
                 barangAdminPageState: state.extra as BarangAdminPageState,
               ),
-              routes: [
-                GoRoute(
-                  path: 'add-barang',
-                  name: 'add-barang',
-                  builder: (context, state) => const AddBarangPage(),
-                )
-              ],
             ),
           ],
         ),

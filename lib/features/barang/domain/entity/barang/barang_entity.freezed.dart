@@ -20,6 +20,7 @@ BarangEntity _$BarangEntityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$BarangEntity {
+  String? get id => throw _privateConstructorUsedError;
   String? get kodeBarang => throw _privateConstructorUsedError;
   String? get nama => throw _privateConstructorUsedError;
   String? get merek => throw _privateConstructorUsedError;
@@ -39,7 +40,8 @@ abstract class $BarangEntityCopyWith<$Res> {
       _$BarangEntityCopyWithImpl<$Res, BarangEntity>;
   @useResult
   $Res call(
-      {String? kodeBarang,
+      {String? id,
+      String? kodeBarang,
       String? nama,
       String? merek,
       String? jenis,
@@ -59,6 +61,7 @@ class _$BarangEntityCopyWithImpl<$Res, $Val extends BarangEntity>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? kodeBarang = freezed,
     Object? nama = freezed,
     Object? merek = freezed,
@@ -66,6 +69,10 @@ class _$BarangEntityCopyWithImpl<$Res, $Val extends BarangEntity>
     Object? unit = freezed,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       kodeBarang: freezed == kodeBarang
           ? _value.kodeBarang
           : kodeBarang // ignore: cast_nullable_to_non_nullable
@@ -99,7 +106,8 @@ abstract class _$$BarangEntityImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? kodeBarang,
+      {String? id,
+      String? kodeBarang,
       String? nama,
       String? merek,
       String? jenis,
@@ -117,6 +125,7 @@ class __$$BarangEntityImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? kodeBarang = freezed,
     Object? nama = freezed,
     Object? merek = freezed,
@@ -124,6 +133,10 @@ class __$$BarangEntityImplCopyWithImpl<$Res>
     Object? unit = freezed,
   }) {
     return _then(_$BarangEntityImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       kodeBarang: freezed == kodeBarang
           ? _value.kodeBarang
           : kodeBarang // ignore: cast_nullable_to_non_nullable
@@ -152,11 +165,13 @@ class __$$BarangEntityImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$BarangEntityImpl implements _BarangEntity {
   const _$BarangEntityImpl(
-      {this.kodeBarang, this.nama, this.merek, this.jenis, this.unit});
+      {this.id, this.kodeBarang, this.nama, this.merek, this.jenis, this.unit});
 
   factory _$BarangEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$BarangEntityImplFromJson(json);
 
+  @override
+  final String? id;
   @override
   final String? kodeBarang;
   @override
@@ -170,7 +185,7 @@ class _$BarangEntityImpl implements _BarangEntity {
 
   @override
   String toString() {
-    return 'BarangEntity(kodeBarang: $kodeBarang, nama: $nama, merek: $merek, jenis: $jenis, unit: $unit)';
+    return 'BarangEntity(id: $id, kodeBarang: $kodeBarang, nama: $nama, merek: $merek, jenis: $jenis, unit: $unit)';
   }
 
   @override
@@ -178,6 +193,7 @@ class _$BarangEntityImpl implements _BarangEntity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BarangEntityImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.kodeBarang, kodeBarang) ||
                 other.kodeBarang == kodeBarang) &&
             (identical(other.nama, nama) || other.nama == nama) &&
@@ -189,7 +205,7 @@ class _$BarangEntityImpl implements _BarangEntity {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, kodeBarang, nama, merek, jenis, unit);
+      Object.hash(runtimeType, id, kodeBarang, nama, merek, jenis, unit);
 
   @JsonKey(ignore: true)
   @override
@@ -207,7 +223,8 @@ class _$BarangEntityImpl implements _BarangEntity {
 
 abstract class _BarangEntity implements BarangEntity {
   const factory _BarangEntity(
-      {final String? kodeBarang,
+      {final String? id,
+      final String? kodeBarang,
       final String? nama,
       final String? merek,
       final String? jenis,
@@ -216,6 +233,8 @@ abstract class _BarangEntity implements BarangEntity {
   factory _BarangEntity.fromJson(Map<String, dynamic> json) =
       _$BarangEntityImpl.fromJson;
 
+  @override
+  String? get id;
   @override
   String? get kodeBarang;
   @override

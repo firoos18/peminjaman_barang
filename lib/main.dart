@@ -7,7 +7,11 @@ import 'package:peminjaman_barang/features/auth/presentation/blocs/admin_login/a
 import 'package:peminjaman_barang/features/auth/presentation/blocs/admin_register/admin_register_bloc.dart';
 import 'package:peminjaman_barang/features/auth/presentation/blocs/user_login/user_login_bloc.dart';
 import 'package:peminjaman_barang/features/auth/presentation/blocs/user_register/user_register_bloc.dart';
+import 'package:peminjaman_barang/features/barang/presentation/blocs/add_barang_admin/add_barang_admin_bloc.dart';
 import 'package:peminjaman_barang/features/barang/presentation/blocs/barang_admin/barang_admin_bloc.dart';
+import 'package:peminjaman_barang/features/barang/presentation/blocs/barang_by_id/barang_by_id_bloc.dart';
+import 'package:peminjaman_barang/features/barang/presentation/blocs/delete_barang/delete_barang_bloc.dart';
+import 'package:peminjaman_barang/features/barang/presentation/blocs/update_barang/update_barang_bloc.dart';
 import 'package:peminjaman_barang/features/profile/presentation/blocs/admin/admin_bloc.dart';
 import 'package:peminjaman_barang/features/profile/presentation/blocs/user/user_bloc.dart';
 import 'package:peminjaman_barang/injection.dart';
@@ -47,6 +51,18 @@ class MainApp extends StatelessWidget {
           create: (_) => injector(),
         ),
         BlocProvider<BarangAdminBloc>(
+          create: (_) => injector(),
+        ),
+        BlocProvider<BarangByIdBloc>(
+          create: (_) => injector(),
+        ),
+        BlocProvider<AddBarangAdminBloc>(
+          create: (_) => injector(),
+        ),
+        BlocProvider<DeleteBarangBloc>(
+          create: (_) => injector(),
+        ),
+        BlocProvider<UpdateBarangBloc>(
           create: (_) => injector(),
         ),
       ],

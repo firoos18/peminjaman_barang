@@ -18,8 +18,16 @@ import 'package:peminjaman_barang/features/auth/presentation/blocs/user_register
 import 'package:peminjaman_barang/features/barang/data/data_sources/barang_api_service.dart';
 import 'package:peminjaman_barang/features/barang/data/repository/barang_repository_impl.dart';
 import 'package:peminjaman_barang/features/barang/domain/repository/barang_repository.dart';
+import 'package:peminjaman_barang/features/barang/domain/usecases/add_barang_admin_usecase.dart';
+import 'package:peminjaman_barang/features/barang/domain/usecases/delete_barang_usecase.dart';
 import 'package:peminjaman_barang/features/barang/domain/usecases/get_barang_admin_usecase.dart';
+import 'package:peminjaman_barang/features/barang/domain/usecases/get_barang_by_id_usecase.dart';
+import 'package:peminjaman_barang/features/barang/domain/usecases/update_barang_usecase.dart';
+import 'package:peminjaman_barang/features/barang/presentation/blocs/add_barang_admin/add_barang_admin_bloc.dart';
 import 'package:peminjaman_barang/features/barang/presentation/blocs/barang_admin/barang_admin_bloc.dart';
+import 'package:peminjaman_barang/features/barang/presentation/blocs/barang_by_id/barang_by_id_bloc.dart';
+import 'package:peminjaman_barang/features/barang/presentation/blocs/delete_barang/delete_barang_bloc.dart';
+import 'package:peminjaman_barang/features/barang/presentation/blocs/update_barang/update_barang_bloc.dart';
 import 'package:peminjaman_barang/features/profile/data/data_sources/user_api_service.dart';
 import 'package:peminjaman_barang/features/profile/data/repository/user_repository_impl.dart';
 import 'package:peminjaman_barang/features/profile/domain/repository/user_repository.dart';
@@ -69,6 +77,14 @@ Future<void> initializeDependencies() async {
       .registerSingleton<GetAdminInfoUseCase>(GetAdminInfoUseCase(injector()));
   injector.registerSingleton<GetBarangAdminUseCase>(
       GetBarangAdminUseCase(injector()));
+  injector.registerSingleton<AddBarangAdminUseCase>(
+      AddBarangAdminUseCase(injector()));
+  injector
+      .registerSingleton<DeleteBarangUseCase>(DeleteBarangUseCase(injector()));
+  injector
+      .registerSingleton<UpdateBarangUseCase>(UpdateBarangUseCase(injector()));
+  injector.registerSingleton<GetBarangByIdUseCase>(
+      GetBarangByIdUseCase(injector()));
 
   // Blocs
   injector.registerFactory<AdminLoginBloc>(
@@ -82,4 +98,11 @@ Future<void> initializeDependencies() async {
   injector.registerFactory<UserBloc>(() => UserBloc(injector()));
   injector.registerFactory<AdminBloc>(() => AdminBloc(injector()));
   injector.registerFactory<BarangAdminBloc>(() => BarangAdminBloc(injector()));
+  injector.registerFactory<BarangByIdBloc>(() => BarangByIdBloc(injector()));
+  injector.registerFactory<AddBarangAdminBloc>(
+      () => AddBarangAdminBloc(injector()));
+  injector
+      .registerFactory<DeleteBarangBloc>(() => DeleteBarangBloc(injector()));
+  injector
+      .registerFactory<UpdateBarangBloc>(() => UpdateBarangBloc(injector()));
 }
