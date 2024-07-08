@@ -42,6 +42,13 @@ import 'package:peminjaman_barang/features/profile/domain/usecases/get_admin_inf
 import 'package:peminjaman_barang/features/profile/domain/usecases/get_user_info_usecase.dart';
 import 'package:peminjaman_barang/features/profile/presentation/blocs/admin/admin_bloc.dart';
 import 'package:peminjaman_barang/features/profile/presentation/blocs/user/user_bloc.dart';
+import 'package:peminjaman_barang/features/transaksi/data/data_source/transaksi_api_service.dart';
+import 'package:peminjaman_barang/features/transaksi/data/repository/transaksi_repository_impl.dart';
+import 'package:peminjaman_barang/features/transaksi/domain/repository/transaksi_repository.dart';
+import 'package:peminjaman_barang/features/transaksi/domain/usecases/get_all_admin_transaksi_usecase.dart';
+import 'package:peminjaman_barang/features/transaksi/domain/usecases/get_all_user_transaksi_usecase.dart';
+import 'package:peminjaman_barang/features/transaksi/presentation/blocs/admin_transaksi/admin_transaksi_bloc.dart';
+import 'package:peminjaman_barang/features/transaksi/presentation/blocs/user_transaksi/user_transaksi_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final injector = GetIt.instance;
@@ -59,6 +66,8 @@ Future<void> initializeDependencies() async {
   injector.registerSingleton<BarangApiService>(BarangApiService(injector()));
   injector.registerSingleton<PeminjamanApiService>(
       PeminjamanApiService(injector()));
+  injector
+      .registerSingleton<TransaksiApiService>(TransaksiApiService(injector()));
 
   // Repositories
   injector.registerSingleton<AuthRepository>(
@@ -68,6 +77,8 @@ Future<void> initializeDependencies() async {
       .registerSingleton<BarangRepository>(BarangRepositoryImpl(injector()));
   injector.registerSingleton<PeminjamanRepository>(
       PeminjamanRepositoryImpl(injector()));
+  injector.registerSingleton<TransaksiRepository>(
+      TransaksiRepositoryImpl(injector()));
 
   // UseCases
   injector.registerSingleton<AdminLoginUseCase>(AdminLoginUseCase(injector()));
@@ -100,6 +111,10 @@ Future<void> initializeDependencies() async {
       GetAllPeminjamanUseCase(injector()));
   injector
       .registerSingleton<PinjamBarangUseCase>(PinjamBarangUseCase(injector()));
+  injector.registerSingleton<GetAllUserTransaksiUseCase>(
+      GetAllUserTransaksiUseCase(injector()));
+  injector.registerSingleton<GetAllAdminTransaksiUseCase>(
+      GetAllAdminTransaksiUseCase(injector()));
 
   // Blocs
   injector.registerFactory<AdminLoginBloc>(
@@ -124,4 +139,8 @@ Future<void> initializeDependencies() async {
       () => GetAllPeminjamanBloc(injector()));
   injector
       .registerFactory<PinjamBarangBloc>(() => PinjamBarangBloc(injector()));
+  injector.registerFactory<AdminTransaksiBloc>(
+      () => AdminTransaksiBloc(injector()));
+  injector
+      .registerFactory<UserTransaksiBloc>(() => UserTransaksiBloc(injector()));
 }

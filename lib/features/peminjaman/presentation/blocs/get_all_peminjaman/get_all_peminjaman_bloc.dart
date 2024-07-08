@@ -22,8 +22,6 @@ class GetAllPeminjamanBloc
     final data =
         await _getAllPeminjamanUseCase.peminjamanRepository.getAllPeminjaman();
 
-    print(data.isRight);
-
     data.fold(
       (left) => emit(GetAllPeminjamanFailed(message: left.message)),
       (right) => emit(GetAllPeminjamanLoaded(listPeminjamanEntity: right.data)),

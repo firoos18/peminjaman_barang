@@ -16,6 +16,8 @@ import 'package:peminjaman_barang/features/peminjaman/presentation/blocs/get_all
 import 'package:peminjaman_barang/features/peminjaman/presentation/blocs/pinjam_barang/pinjam_barang_bloc.dart';
 import 'package:peminjaman_barang/features/profile/presentation/blocs/admin/admin_bloc.dart';
 import 'package:peminjaman_barang/features/profile/presentation/blocs/user/user_bloc.dart';
+import 'package:peminjaman_barang/features/transaksi/presentation/blocs/admin_transaksi/admin_transaksi_bloc.dart';
+import 'package:peminjaman_barang/features/transaksi/presentation/blocs/user_transaksi/user_transaksi_bloc.dart';
 import 'package:peminjaman_barang/injection.dart';
 import 'package:url_strategy/url_strategy.dart';
 
@@ -71,6 +73,12 @@ class MainApp extends StatelessWidget {
           create: (_) => injector(),
         ),
         BlocProvider<GetAllPeminjamanBloc>(
+          create: (_) => injector(),
+        ),
+        BlocProvider<AdminTransaksiBloc>(
+          create: (_) => injector(),
+        ),
+        BlocProvider<UserTransaksiBloc>(
           create: (_) => injector(),
         ),
       ],

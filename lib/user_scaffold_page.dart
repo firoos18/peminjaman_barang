@@ -6,6 +6,7 @@ import 'package:peminjaman_barang/features/barang/presentation/page/barang_admin
 import 'package:peminjaman_barang/features/dashboard/presentation/page/dashboard_page.dart';
 import 'package:peminjaman_barang/features/peminjaman/presentation/pages/peminjaman_page.dart';
 import 'package:peminjaman_barang/features/profile/presentation/blocs/user/user_bloc.dart';
+import 'package:peminjaman_barang/features/transaksi/presentation/pages/transaksi_page.dart';
 
 class UserScaffoldPage extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
@@ -127,7 +128,9 @@ class UserScaffoldPageState extends State<UserScaffoldPage>
                           PeminjamanPage(
                             peminjamanPageState: PeminjamanPageState.pinjam,
                           ),
-                          DashboardPage(),
+                          TransaksiPage(
+                            transaksiPageState: TransaksiPageState.user,
+                          ),
                         ],
                       ),
                     ),

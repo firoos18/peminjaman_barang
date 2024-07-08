@@ -4,6 +4,7 @@ import 'package:peminjaman_barang/features/barang/presentation/page/barang_admin
 import 'package:peminjaman_barang/features/dashboard/presentation/page/dashboard_page.dart';
 import 'package:peminjaman_barang/features/auth/presentation/page/auth_page.dart';
 import 'package:peminjaman_barang/features/peminjaman/presentation/pages/peminjaman_page.dart';
+import 'package:peminjaman_barang/features/transaksi/presentation/pages/transaksi_page.dart';
 import 'package:peminjaman_barang/landing_page.dart';
 import 'package:peminjaman_barang/admin_scaffold_page.dart';
 import 'package:peminjaman_barang/user_scaffold_page.dart';
@@ -88,7 +89,9 @@ final GoRouter router = GoRouter(
             GoRoute(
               path: '/transaksi-admin',
               name: 'transaksi-admin',
-              builder: (context, state) => const DashboardPage(),
+              builder: (context, state) => TransaksiPage(
+                transaksiPageState: state.extra as TransaksiPageState,
+              ),
             ),
           ],
         ),
@@ -137,7 +140,9 @@ final GoRouter router = GoRouter(
             GoRoute(
               path: '/transaksi-user',
               name: 'transaksi-user',
-              builder: (context, state) => const DashboardPage(),
+              builder: (context, state) => TransaksiPage(
+                transaksiPageState: state.extra as TransaksiPageState,
+              ),
             ),
           ],
         ),
