@@ -24,6 +24,9 @@ class _AuthPageState extends State<AuthPage> {
       TextEditingController();
   final TextEditingController _alamatController = TextEditingController();
 
+  bool isShowPassword = false;
+  bool isShowRepeatPassword = false;
+
   bool isAdmin = true;
   bool isLogin = true;
 
@@ -305,12 +308,23 @@ class _AuthPageState extends State<AuthPage> {
                                     const SizedBox(height: 8),
                                     TextField(
                                       controller: _passwordController,
+                                      obscureText: !isShowPassword,
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(50),
                                           borderSide: const BorderSide(
                                               color: Colors.black),
+                                        ),
+                                        suffixIcon: IconButton(
+                                          onPressed: () => setState(() {
+                                            isShowPassword = !isShowPassword;
+                                          }),
+                                          icon: Icon(
+                                            !isShowPassword
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -334,12 +348,24 @@ class _AuthPageState extends State<AuthPage> {
                                     const SizedBox(height: 8),
                                     TextField(
                                       controller: _repeatPasswordController,
+                                      obscureText: !isShowRepeatPassword,
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(50),
                                           borderSide: const BorderSide(
                                               color: Colors.black),
+                                        ),
+                                        suffixIcon: IconButton(
+                                          onPressed: () => setState(() {
+                                            isShowRepeatPassword =
+                                                !isShowRepeatPassword;
+                                          }),
+                                          icon: Icon(
+                                            !isShowRepeatPassword
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -406,12 +432,23 @@ class _AuthPageState extends State<AuthPage> {
                                     const SizedBox(height: 8),
                                     TextField(
                                       controller: _passwordController,
+                                      obscureText: !isShowPassword,
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(50),
                                           borderSide: const BorderSide(
                                               color: Colors.black),
+                                        ),
+                                        suffixIcon: IconButton(
+                                          onPressed: () => setState(() {
+                                            isShowPassword = !isShowPassword;
+                                          }),
+                                          icon: Icon(
+                                            !isShowPassword
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                          ),
                                         ),
                                       ),
                                     ),

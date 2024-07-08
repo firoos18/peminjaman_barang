@@ -55,7 +55,9 @@ final GoRouter router = GoRouter(
             GoRoute(
               path: '/admin',
               name: 'dashboard-admin',
-              builder: (context, state) => const DashboardPage(),
+              builder: (context, state) => DashboardPage(
+                dashboardPageState: state.extra as DashboardPageState,
+              ),
             ),
           ],
         ),
@@ -108,7 +110,9 @@ final GoRouter router = GoRouter(
             GoRoute(
               path: '/user',
               name: 'dashboard-user',
-              builder: (context, state) => const DashboardPage(),
+              builder: (context, state) => DashboardPage(
+                dashboardPageState: state.extra as DashboardPageState,
+              ),
             ),
           ],
         ),
@@ -118,7 +122,9 @@ final GoRouter router = GoRouter(
             GoRoute(
               path: '/data-barang-user',
               name: 'data-barang-user',
-              builder: (context, state) => const DashboardPage(),
+              builder: (context, state) => BarangAdminPage(
+                barangAdminPageState: state.extra as BarangAdminPageState,
+              ),
             ),
           ],
         ),

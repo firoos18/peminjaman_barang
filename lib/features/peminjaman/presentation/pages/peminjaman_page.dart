@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:peminjaman_barang/core/commons/widgets/custom_loading_indicator.dart';
+import 'package:peminjaman_barang/features/peminjaman/data/models/pinjam_model.dart';
 import 'package:peminjaman_barang/features/peminjaman/presentation/blocs/get_all_peminjaman/get_all_peminjaman_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:peminjaman_barang/features/peminjaman/presentation/blocs/pinjam_barang/pinjam_barang_bloc.dart';
 
 enum PeminjamanPageState { peminjaman, pinjam }
 
@@ -17,6 +21,17 @@ class PeminjamanPage extends StatefulWidget {
 }
 
 class _PeminjamanPageState extends State<PeminjamanPage> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController _namaController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _kodeBarangController = TextEditingController();
+  final TextEditingController _namaBarangController = TextEditingController();
+  final TextEditingController _jumlahBarangController = TextEditingController();
+  final TextEditingController _tanggalPinjamController =
+      TextEditingController();
+  final TextEditingController _tanggalKembaliController =
+      TextEditingController();
+
   @override
   void initState() {
     context.read<GetAllPeminjamanBloc>().add(GetAllPeminjaman());
@@ -220,11 +235,398 @@ class _PeminjamanPageState extends State<PeminjamanPage> {
         ),
       );
     } else {
-      return Center(
-        child: Container(
-          width: 64,
-          height: 64,
-          color: Colors.green,
+      return BlocListener<PinjamBarangBloc, PinjamBarangState>(
+        listener: (context, state) {
+          if (state is PinjamBarangLoading) {
+            showDialog(
+              context: context,
+              builder: (context) => const CustomLoadingIndicator(),
+            );
+          } else if (state is PinjamBarangFailed) {
+            context.pop();
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message!)),
+            );
+          } else {
+            context.pop();
+            _namaController.clear();
+            _emailController.clear();
+            _namaBarangController.clear();
+            _jumlahBarangController.clear();
+            _kodeBarangController.clear();
+            _tanggalKembaliController.clear();
+            _tanggalPinjamController.clear();
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Success')),
+            );
+          }
+        },
+        child: Center(
+          child: Stack(
+            children: [
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 30, horizontal: 40),
+                padding: const EdgeInsets.only(
+                    top: 90, right: 64, left: 64, bottom: 16),
+                decoration: BoxDecoration(
+                  color: const Color(0xffF6CB7D),
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: Form(
+                  key: formKey,
+                  child: SingleChildScrollView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Nama',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.28,
+                                  child: TextFormField(
+                                    controller: _namaController,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Nama Peminjam tidak boleh kosong';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(width: 16),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Email',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.28,
+                                  child: TextFormField(
+                                    controller: _emailController,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Email Peminjam tidak boleh kosong';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Text(
+                                  'Kode Barang',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.15,
+                                  child: TextFormField(
+                                    controller: _kodeBarangController,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Kode Barang tidak boleh kosong';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Nama Barang',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  child: TextFormField(
+                                    controller: _namaBarangController,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Nama Barang tidak boleh kosong';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Jumlah Barang',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.15,
+                                  child: TextFormField(
+                                    controller: _jumlahBarangController,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                    ),
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[0-9]')),
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Jumlah Unit Barang tidak boleh kosong';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Tanggal Pinjam',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.15,
+                                  child: TextFormField(
+                                    controller: _tanggalPinjamController,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      hintText: 'YYYY-MM-DD',
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Tanggal Pinjam Barang tidak boleh kosong';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(width: 16),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Tanggal Kembali',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.15,
+                                  child: TextFormField(
+                                    controller: _tanggalKembaliController,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      hintText: 'YYYY-MM-DD',
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Tanggal Kembali Barang tidak boleh kosong';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 24),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                if (formKey.currentState!.validate()) {
+                                  final nama = _namaController.text.trim();
+                                  final email = _emailController.text.trim();
+                                  final kodeBarang =
+                                      _kodeBarangController.text.trim();
+                                  final namaBarang =
+                                      _namaBarangController.text.trim();
+                                  final jumlahBarang =
+                                      _jumlahBarangController.text.trim();
+                                  final tanggalPinjam =
+                                      _tanggalPinjamController.text.trim();
+                                  final tanggalKembali =
+                                      _tanggalKembaliController.text.trim();
+
+                                  final PinjamModel pinjamModel = PinjamModel(
+                                    email: email,
+                                    nama: nama,
+                                    namaBarang: namaBarang,
+                                    kodeBarang: kodeBarang,
+                                    jumlah: int.parse(jumlahBarang),
+                                    tanggalPinjam:
+                                        DateTime.parse(tanggalPinjam),
+                                    tanggalKembali:
+                                        DateTime.parse(tanggalKembali),
+                                  );
+
+                                  context.read<PinjamBarangBloc>().add(
+                                      PinjamBarangButtonTapped(
+                                          pinjamModel: pinjamModel));
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                  side: const BorderSide(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                minimumSize: const Size(120, 48),
+                                backgroundColor: const Color(0xffBBBBBB),
+                                foregroundColor: Colors.white,
+                              ),
+                              child: const Text('Submit'),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 72, vertical: 24),
+                margin:
+                    const EdgeInsets.symmetric(vertical: 30, horizontal: 40),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: const Color(0xffDFA947),
+                ),
+                child: Row(
+                  children: [
+                    Image.asset('assets/images/peminjaman.png'),
+                    const SizedBox(width: 8),
+                    const Text(
+                      'Pinjam Barang',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       );
     }

@@ -121,7 +121,9 @@ class UserScaffoldPageState extends State<UserScaffoldPage>
                       child: TabBarView(
                         controller: _tabController,
                         children: const [
-                          DashboardPage(),
+                          DashboardPage(
+                            dashboardPageState: DashboardPageState.user,
+                          ),
                           BarangAdminPage(
                             barangAdminPageState: BarangAdminPageState.user,
                           ),
