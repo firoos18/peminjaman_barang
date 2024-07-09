@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:peminjaman_barang/core/commons/widgets/custom_loading_indicator.dart';
@@ -36,6 +37,16 @@ class _BarangAdminPageState extends State<BarangAdminPage> {
   final TextEditingController _jenisBarangController = TextEditingController();
   final TextEditingController _unitBarangController = TextEditingController();
   String? selectedBarangId;
+  final ValueNotifier<bool> _isButtonEnabled = ValueNotifier<bool>(false);
+
+  void _validateFields() {
+    bool isFilled = _kodeBarangController.text.isNotEmpty &&
+        _namaBarangController.text.isNotEmpty &&
+        _merekBarangController.text.isNotEmpty &&
+        _jenisBarangController.text.isNotEmpty &&
+        _unitBarangController.text.isNotEmpty;
+    _isButtonEnabled.value = isFilled;
+  }
 
   @override
   void initState() {
@@ -50,6 +61,11 @@ class _BarangAdminPageState extends State<BarangAdminPage> {
         _barangAdminPageState = BarangAdminPageState.data;
       });
     }
+    _kodeBarangController.addListener(_validateFields);
+    _namaBarangController.addListener(_validateFields);
+    _jenisBarangController.addListener(_validateFields);
+    _merekBarangController.addListener(_validateFields);
+    _unitBarangController.addListener(_validateFields);
 
     super.initState();
   }
@@ -114,6 +130,12 @@ class _BarangAdminPageState extends State<BarangAdminPage> {
                           ElevatedButton(
                             onPressed: () => setState(() {
                               _barangAdminPageState = BarangAdminPageState.add;
+
+                              _kodeBarangController.clear();
+                              _namaBarangController.clear();
+                              _jenisBarangController.clear();
+                              _merekBarangController.clear();
+                              _unitBarangController.clear();
                             }),
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size(140, 38),
@@ -291,6 +313,17 @@ class _BarangAdminPageState extends State<BarangAdminPage> {
                                                 PopupMenuItem(
                                                   value: MenuButton.edit,
                                                   onTap: () {
+                                                    _kodeBarangController
+                                                        .clear();
+                                                    _namaBarangController
+                                                        .clear();
+                                                    _jenisBarangController
+                                                        .clear();
+                                                    _merekBarangController
+                                                        .clear();
+                                                    _unitBarangController
+                                                        .clear();
+
                                                     setState(() {
                                                       _barangAdminPageState =
                                                           BarangAdminPageState
@@ -781,46 +814,48 @@ class _BarangAdminPageState extends State<BarangAdminPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            final String kodeBarang =
-                                _kodeBarangController.text.trim();
-                            final String nama =
-                                _namaBarangController.text.trim();
-                            final String merek =
-                                _merekBarangController.text.trim();
-                            final String jenis =
-                                _jenisBarangController.text.trim();
-                            final int unit =
-                                int.parse(_unitBarangController.text.trim());
+                      ValueListenableBuilder<bool>(
+                        valueListenable: _isButtonEnabled,
+                        builder: (context, value, child) => ElevatedButton(
+                          onPressed: value
+                              ? () {
+                                  if (formKey.currentState!.validate()) {
+                                    final String kodeBarang =
+                                        _kodeBarangController.text.trim();
+                                    final String nama =
+                                        _namaBarangController.text.trim();
+                                    final String merek =
+                                        _merekBarangController.text.trim();
+                                    final String jenis =
+                                        _jenisBarangController.text.trim();
+                                    final int unit = int.parse(
+                                        _unitBarangController.text.trim());
 
-                            final AddBarangModel addBarangModel =
-                                AddBarangModel(
-                              kodeBarang: kodeBarang,
-                              nama: nama,
-                              merek: merek,
-                              jenis: jenis,
-                              unit: unit,
-                            );
+                                    final AddBarangModel addBarangModel =
+                                        AddBarangModel(
+                                      kodeBarang: kodeBarang,
+                                      nama: nama,
+                                      merek: merek,
+                                      jenis: jenis,
+                                      unit: unit,
+                                    );
 
-                            context.read<AddBarangAdminBloc>().add(
-                                AddBarangAdminButtonTapped(
-                                    addBarangModel: addBarangModel));
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            side: const BorderSide(
-                              color: Colors.black,
+                                    context.read<AddBarangAdminBloc>().add(
+                                        AddBarangAdminButtonTapped(
+                                            addBarangModel: addBarangModel));
+                                  }
+                                }
+                              : null,
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
                             ),
+                            minimumSize: const Size(120, 48),
+                            backgroundColor: const Color(0xff2E2D51),
+                            foregroundColor: Colors.white,
                           ),
-                          minimumSize: const Size(120, 48),
-                          backgroundColor: const Color(0xffBBBBBB),
-                          foregroundColor: Colors.white,
+                          child: const Text('Submit'),
                         ),
-                        child: const Text('Submit'),
                       ),
                     ],
                   )
@@ -1121,48 +1156,55 @@ class _BarangAdminPageState extends State<BarangAdminPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                if (formKey.currentState!.validate()) {
-                                  final String kodeBarang =
-                                      _kodeBarangController.text.trim();
-                                  final String nama =
-                                      _namaBarangController.text.trim();
-                                  final String merek =
-                                      _merekBarangController.text.trim();
-                                  final String jenis =
-                                      _jenisBarangController.text.trim();
-                                  final int unit = int.parse(
-                                      _unitBarangController.text.trim());
+                            ValueListenableBuilder<bool>(
+                              valueListenable: _isButtonEnabled,
+                              builder: (context, value, child) =>
+                                  ElevatedButton(
+                                onPressed: value
+                                    ? () {
+                                        if (formKey.currentState!.validate()) {
+                                          final String kodeBarang =
+                                              _kodeBarangController.text.trim();
+                                          final String nama =
+                                              _namaBarangController.text.trim();
+                                          final String merek =
+                                              _merekBarangController.text
+                                                  .trim();
+                                          final String jenis =
+                                              _jenisBarangController.text
+                                                  .trim();
+                                          final int unit = int.parse(
+                                              _unitBarangController.text
+                                                  .trim());
 
-                                  final AddBarangModel addBarangModel =
-                                      AddBarangModel(
-                                    kodeBarang: kodeBarang,
-                                    nama: nama,
-                                    merek: merek,
-                                    jenis: jenis,
-                                    unit: unit,
-                                  );
+                                          final AddBarangModel addBarangModel =
+                                              AddBarangModel(
+                                            kodeBarang: kodeBarang,
+                                            nama: nama,
+                                            merek: merek,
+                                            jenis: jenis,
+                                            unit: unit,
+                                          );
 
-                                  context.read<UpdateBarangBloc>().add(
-                                        UpdateBarangButtonTapped(
-                                            id: selectedBarangId,
-                                            addBarangModel: addBarangModel),
-                                      );
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  side: const BorderSide(
-                                    color: Colors.black,
+                                          context.read<UpdateBarangBloc>().add(
+                                                UpdateBarangButtonTapped(
+                                                    id: selectedBarangId,
+                                                    addBarangModel:
+                                                        addBarangModel),
+                                              );
+                                        }
+                                      }
+                                    : null,
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
                                   ),
+                                  minimumSize: const Size(120, 48),
+                                  backgroundColor: const Color(0xff2E2D51),
+                                  foregroundColor: Colors.white,
                                 ),
-                                minimumSize: const Size(120, 48),
-                                backgroundColor: const Color(0xffBBBBBB),
-                                foregroundColor: Colors.white,
+                                child: const Text('Submit'),
                               ),
-                              child: const Text('Submit'),
                             ),
                           ],
                         )

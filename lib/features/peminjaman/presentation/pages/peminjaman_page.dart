@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:peminjaman_barang/core/commons/widgets/custom_loading_indicator.dart';
@@ -31,10 +32,29 @@ class _PeminjamanPageState extends State<PeminjamanPage> {
       TextEditingController();
   final TextEditingController _tanggalKembaliController =
       TextEditingController();
+  final ValueNotifier<bool> _isButtonEnabled = ValueNotifier<bool>(false);
+
+  void validateFields() {
+    bool isFilled = _namaController.text.isNotEmpty &&
+        _emailController.text.isNotEmpty &&
+        _kodeBarangController.text.isNotEmpty &&
+        _namaBarangController.text.isNotEmpty &&
+        _jumlahBarangController.text.isNotEmpty &&
+        _tanggalKembaliController.text.isNotEmpty &&
+        _tanggalPinjamController.text.isNotEmpty;
+    _isButtonEnabled.value = isFilled;
+  }
 
   @override
   void initState() {
     context.read<GetAllPeminjamanBloc>().add(GetAllPeminjaman());
+    _namaController.addListener(validateFields);
+    _emailController.addListener(validateFields);
+    _kodeBarangController.addListener(validateFields);
+    _namaBarangController.addListener(validateFields);
+    _jumlahBarangController.addListener(validateFields);
+    _tanggalKembaliController.addListener(validateFields);
+    _tanggalPinjamController.addListener(validateFields);
     super.initState();
   }
 
@@ -178,14 +198,18 @@ class _PeminjamanPageState extends State<PeminjamanPage> {
                                             ),
                                           ),
                                           Text(
-                                            barang.barang!.kodeBarang!,
+                                            barang.barang != null
+                                                ? barang.barang!.kodeBarang!
+                                                : 'Barang Tidak Tersedia',
                                             style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
                                           Text(
-                                            barang.barang!.nama!,
+                                            barang.barang != null
+                                                ? barang.barang!.nama!
+                                                : 'Barang Tidak Tersedia',
                                             style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w500,
@@ -549,51 +573,60 @@ class _PeminjamanPageState extends State<PeminjamanPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                if (formKey.currentState!.validate()) {
-                                  final nama = _namaController.text.trim();
-                                  final email = _emailController.text.trim();
-                                  final kodeBarang =
-                                      _kodeBarangController.text.trim();
-                                  final namaBarang =
-                                      _namaBarangController.text.trim();
-                                  final jumlahBarang =
-                                      _jumlahBarangController.text.trim();
-                                  final tanggalPinjam =
-                                      _tanggalPinjamController.text.trim();
-                                  final tanggalKembali =
-                                      _tanggalKembaliController.text.trim();
+                            ValueListenableBuilder(
+                              valueListenable: _isButtonEnabled,
+                              builder: (context, value, child) =>
+                                  ElevatedButton(
+                                onPressed: value
+                                    ? () {
+                                        if (formKey.currentState!.validate()) {
+                                          final nama =
+                                              _namaController.text.trim();
+                                          final email =
+                                              _emailController.text.trim();
+                                          final kodeBarang =
+                                              _kodeBarangController.text.trim();
+                                          final namaBarang =
+                                              _namaBarangController.text.trim();
+                                          final jumlahBarang =
+                                              _jumlahBarangController.text
+                                                  .trim();
+                                          final tanggalPinjam =
+                                              _tanggalPinjamController.text
+                                                  .trim();
+                                          final tanggalKembali =
+                                              _tanggalKembaliController.text
+                                                  .trim();
 
-                                  final PinjamModel pinjamModel = PinjamModel(
-                                    email: email,
-                                    nama: nama,
-                                    namaBarang: namaBarang,
-                                    kodeBarang: kodeBarang,
-                                    jumlah: int.parse(jumlahBarang),
-                                    tanggalPinjam:
-                                        DateTime.parse(tanggalPinjam),
-                                    tanggalKembali:
-                                        DateTime.parse(tanggalKembali),
-                                  );
+                                          final PinjamModel pinjamModel =
+                                              PinjamModel(
+                                            email: email,
+                                            nama: nama,
+                                            namaBarang: namaBarang,
+                                            kodeBarang: kodeBarang,
+                                            jumlah: int.parse(jumlahBarang),
+                                            tanggalPinjam:
+                                                DateTime.parse(tanggalPinjam),
+                                            tanggalKembali:
+                                                DateTime.parse(tanggalKembali),
+                                          );
 
-                                  context.read<PinjamBarangBloc>().add(
-                                      PinjamBarangButtonTapped(
-                                          pinjamModel: pinjamModel));
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  side: const BorderSide(
-                                    color: Colors.black,
+                                          context.read<PinjamBarangBloc>().add(
+                                              PinjamBarangButtonTapped(
+                                                  pinjamModel: pinjamModel));
+                                        }
+                                      }
+                                    : null,
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
                                   ),
+                                  minimumSize: const Size(120, 48),
+                                  backgroundColor: const Color(0xff2E2D51),
+                                  foregroundColor: Colors.white,
                                 ),
-                                minimumSize: const Size(120, 48),
-                                backgroundColor: const Color(0xffBBBBBB),
-                                foregroundColor: Colors.white,
+                                child: const Text('Submit'),
                               ),
-                              child: const Text('Submit'),
                             ),
                           ],
                         )

@@ -23,12 +23,38 @@ class _AuthPageState extends State<AuthPage> {
   final TextEditingController _repeatPasswordController =
       TextEditingController();
   final TextEditingController _alamatController = TextEditingController();
+  final ValueNotifier<bool> _isButtonEnabled = ValueNotifier<bool>(false);
 
   bool isShowPassword = false;
   bool isShowRepeatPassword = false;
 
   bool isAdmin = true;
   bool isLogin = true;
+
+  void _validateFields() {
+    if (isLogin) {
+      final isFilled = _emailController.text.isNotEmpty &&
+          _passwordController.text.isNotEmpty;
+      _isButtonEnabled.value = isFilled;
+    } else {
+      final isFilled = _emailController.text.isNotEmpty &&
+          _passwordController.text.isNotEmpty &&
+          _repeatPasswordController.text.isNotEmpty &&
+          _nameController.text.isNotEmpty &&
+          _alamatController.text.isNotEmpty;
+      _isButtonEnabled.value = isFilled;
+    }
+  }
+
+  @override
+  void initState() {
+    _emailController.addListener(_validateFields);
+    _passwordController.addListener(_validateFields);
+    _repeatPasswordController.addListener(_validateFields);
+    _nameController.addListener(_validateFields);
+    _alamatController.addListener(_validateFields);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -472,6 +498,11 @@ class _AuthPageState extends State<AuthPage> {
                           GestureDetector(
                             onTap: () => setState(() {
                               isLogin = !isLogin;
+                              _emailController.clear();
+                              _passwordController.clear();
+                              _repeatPasswordController.clear();
+                              _alamatController.clear();
+                              _nameController.clear();
                             }),
                             child: Text(
                               isLogin ? ' Daftar' : ' Masuk',
@@ -490,65 +521,75 @@ class _AuthPageState extends State<AuthPage> {
               ),
             ),
             Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  final String email = _emailController.text.trim();
-                  final String name = _nameController.text.trim();
-                  final String password = _passwordController.text.trim();
-                  final String repeatPassword =
-                      _repeatPasswordController.text.trim();
-                  final String alamat = _alamatController.text.trim();
+              child: ValueListenableBuilder<bool>(
+                valueListenable: _isButtonEnabled,
+                builder: (context, value, child) => ElevatedButton(
+                  onPressed: value
+                      ? () {
+                          final String email = _emailController.text.trim();
+                          final String name = _nameController.text.trim();
+                          final String password =
+                              _passwordController.text.trim();
+                          final String repeatPassword =
+                              _repeatPasswordController.text.trim();
+                          final String alamat = _alamatController.text.trim();
 
-                  if (isAdmin && isLogin) {
-                    final LoginModel loginModel =
-                        LoginModel(email: email, password: password);
+                          if (isAdmin && isLogin) {
+                            final LoginModel loginModel =
+                                LoginModel(email: email, password: password);
 
-                    context
-                        .read<AdminLoginBloc>()
-                        .add(AdminLoginButtonTapped(loginModel: loginModel));
-                  } else if (isAdmin && !isLogin) {
-                    final RegisterModel registerModel = RegisterModel(
-                      email: email,
-                      nama: name,
-                      password: password,
-                      repeatPassword: repeatPassword,
-                      alamat: alamat,
-                    );
+                            context.read<AdminLoginBloc>().add(
+                                AdminLoginButtonTapped(loginModel: loginModel));
+                          } else if (isAdmin && !isLogin) {
+                            final RegisterModel registerModel = RegisterModel(
+                              email: email,
+                              nama: name,
+                              password: password,
+                              repeatPassword: repeatPassword,
+                              alamat: alamat,
+                            );
 
-                    context.read<AdminRegisterBloc>().add(
-                        AdminRegisterButtonTapped(
-                            registerModel: registerModel));
-                  } else if (!isAdmin && isLogin) {
-                    final LoginModel loginModel =
-                        LoginModel(email: email, password: password);
+                            context.read<AdminRegisterBloc>().add(
+                                AdminRegisterButtonTapped(
+                                    registerModel: registerModel));
+                          } else if (!isAdmin && isLogin) {
+                            final LoginModel loginModel =
+                                LoginModel(email: email, password: password);
 
-                    context
-                        .read<UserLoginBloc>()
-                        .add(UserLoginButtonTapped(loginModel: loginModel));
-                  } else {
-                    final RegisterModel registerModel = RegisterModel(
-                      email: email,
-                      nama: name,
-                      password: password,
-                      repeatPassword: repeatPassword,
-                      alamat: alamat,
-                    );
+                            context.read<UserLoginBloc>().add(
+                                UserLoginButtonTapped(loginModel: loginModel));
+                          } else {
+                            final RegisterModel registerModel = RegisterModel(
+                              email: email,
+                              nama: name,
+                              password: password,
+                              repeatPassword: repeatPassword,
+                              alamat: alamat,
+                            );
 
-                    context.read<UserRegisterBloc>().add(
-                        UserRegisterButtonTapped(registerModel: registerModel));
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(230, 48),
-                  backgroundColor: const Color(0xffb8b8b8),
-                  foregroundColor: Colors.white,
+                            context.read<UserRegisterBloc>().add(
+                                UserRegisterButtonTapped(
+                                    registerModel: registerModel));
+                          }
+                        }
+                      : null,
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(230, 48),
+                    backgroundColor: const Color(0xff2E2D51),
+                    foregroundColor: Colors.white,
+                  ),
+                  child: Text(isLogin ? 'Masuk' : 'Daftar'),
                 ),
-                child: Text(isLogin ? 'Masuk' : 'Daftar'),
               ),
             ),
             GestureDetector(
               onTap: () => setState(() {
                 isAdmin = !isAdmin;
+                _emailController.clear();
+                _passwordController.clear();
+                _repeatPasswordController.clear();
+                _alamatController.clear();
+                _nameController.clear();
               }),
               child: Container(
                 width: double.infinity,

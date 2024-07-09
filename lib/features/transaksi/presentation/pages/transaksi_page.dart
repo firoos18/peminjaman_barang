@@ -160,7 +160,9 @@ class _TransaksiPageState extends State<TransaksiPage> {
                                             ),
                                           ),
                                           Text(
-                                            barang.barang!.nama!,
+                                            barang.barang != null
+                                                ? barang.barang!.nama!
+                                                : 'Barang Tidak Tersedia',
                                             style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w500,
@@ -338,7 +340,9 @@ class _TransaksiPageState extends State<TransaksiPage> {
                                             ),
                                           ),
                                           Text(
-                                            barang.barang!.nama!,
+                                            barang.barang != null
+                                                ? barang.barang!.nama!
+                                                : 'Barang Tidak Tersedia',
                                             style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w500,
